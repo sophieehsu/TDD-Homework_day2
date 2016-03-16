@@ -33,9 +33,14 @@ namespace PotterShoppingCart
                     BookVol = val.Name,
                     BookCount = double.Parse(val.GetValue(buyList).ToString()) })
                 .ToList();
-           
+
             if (discount.Count() == 1)
                 amount = discount.First().BookCount * buyList.BookPrice;
+            else
+            {
+                if (discount.Count == 2)
+                    amount = discount.Count * buyList.BookPrice * 0.95;
+            }
 
             return amount;
         }
