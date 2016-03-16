@@ -91,7 +91,7 @@ namespace PotterShoppingCart.Tests
         {
             // arragne
             var target = new PotterCalculator();
-            var buyList = new HarryPotter { Vol_1 = 1, Vol_2 = 1, Vol_3 = 1, Vol_4 = 1, Vol_5 = 1 };
+            var buyList = new HarryPotter { Vol_1 = 1, Vol_2 = 1, Vol_3 = 2, Vol_4 = 0, Vol_5 = 0 };
             double expected = 370;
 
             // act

@@ -13,19 +13,13 @@ namespace PotterShoppingCart
         {
             double amount = 0;
 
-            HarryPotter copy = new HarryPotter();
-
-
-            amount = Count(buyList);
+            Count(buyList, ref amount);
 
             return amount;
         }
 
-        private double Count(HarryPotter buyList)
-        {
-            double amount = 0;
-            
-
+        private void Count(HarryPotter buyList, ref double Amount)
+        {            
             List<DiscountBuy> discountList = buyList.GetType().GetProperties()
                 .Where(prop => prop.GetValue(buyList) is int)
                 .Select(val => val)
@@ -33,8 +27,7 @@ namespace PotterShoppingCart
                 .Select(val => new DiscountBuy {
                     BookVol = val.Name,
                     BookCount = double.Parse(val.GetValue(buyList).ToString()) })
-                .ToList();
-
+                .ToList();           
 
             double bookCount = discountList.Count, discount = 1;
 
@@ -53,14 +46,26 @@ namespace PotterShoppingCart
                     discount= 0.95;
                     break;
                 case 1:
-                default:
                     bookCount = discountList.First().BookCount;
                     break;
-            }            
+                default:
+                    discount = 0;
+                    break;
+            }
 
-            amount = bookCount * buyList.BookPrice * discount;
+            Amount += bookCount * buyList.BookPrice * discount;
 
-            return amount;
+            if (discountList.Count > 1)
+            {
+                foreach (var i in discountList)
+                {
+                    PropertyInfo pinfo = typeof(HarryPotter).GetProperty(i.BookVol);
+                    int intCount = (int)pinfo.GetValue(buyList);
+                    pinfo.SetValue(buyList, intCount - 1);
+                }
+
+                Count(buyList, ref Amount);
+            }
         }
     }
 }
