@@ -40,6 +40,9 @@ namespace PotterShoppingCart
 
             switch (discountList.Count)
             {
+                case 4:
+                    discount = 0.8;
+                    break;
                 case 3:
                     discount = 0.9;
                     break;
