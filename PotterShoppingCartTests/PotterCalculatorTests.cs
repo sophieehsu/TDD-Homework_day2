@@ -100,5 +100,20 @@ namespace PotterShoppingCart.Tests
             // assert
             Assert.AreEqual(expected, amount);
         }
+
+        [TestMethod()]
+        public void CalculatorTest_第一集買了一本第二三集各買了兩本價格應為460()
+        {
+            // arragne
+            var target = new PotterCalculator();
+            var buyList = new HarryPotter { Vol_1 = 1, Vol_2 = 2, Vol_3 = 2, Vol_4 = 0, Vol_5 = 0 };
+            double expected = 460;
+
+            // act
+            double amount = target.Calculator(buyList);
+
+            // assert
+            Assert.AreEqual(expected, amount);
+        }
     }
 }
