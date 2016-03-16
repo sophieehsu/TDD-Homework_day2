@@ -16,11 +16,11 @@ namespace PotterShoppingCart.Tests
         {
             // arragne
             var target = new PotterCalculator();
-            var buyList = new { Vol_1 = 1, Vol_2 = 0, Vol_3 = 0, Vol_4 = 0, Vol_5 = 0 };
+            var buyList = new HarryPotter { Vol_1 = 1, Vol_2 = 0, Vol_3 = 0, Vol_4 = 0, Vol_5 = 0 };
             double expected = 100;
 
             // act
-            double amount =  target.Calculator(buyList);
+            double amount = target.Calculator(buyList);
 
             // assert
             Assert.AreEqual(expected, amount);
