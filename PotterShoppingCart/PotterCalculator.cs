@@ -24,8 +24,9 @@ namespace PotterShoppingCart
         private double Count(HarryPotter buyList)
         {
             double amount = 0;
+            
 
-            List<DiscountBuy> discount = buyList.GetType().GetProperties()
+            List<DiscountBuy> discountList = buyList.GetType().GetProperties()
                 .Where(prop => prop.GetValue(buyList) is int)
                 .Select(val => val)
                 .Where(val => (int)val.GetValue(buyList) > 0)
@@ -34,13 +35,24 @@ namespace PotterShoppingCart
                     BookCount = double.Parse(val.GetValue(buyList).ToString()) })
                 .ToList();
 
-            if (discount.Count() == 1)
-                amount = discount.First().BookCount * buyList.BookPrice;
-            else
+
+            double bookCount = discountList.Count, discount = 1;
+
+            switch (discountList.Count)
             {
-                if (discount.Count == 2)
-                    amount = discount.Count * buyList.BookPrice * 0.95;
-            }
+                case 3:
+                    discount = 0.9;
+                    break;
+                case 2:
+                    discount= 0.95;
+                    break;
+                case 1:
+                default:
+                    bookCount = discountList.First().BookCount;
+                    break;
+            }            
+
+            amount = bookCount * buyList.BookPrice * discount;
 
             return amount;
         }
